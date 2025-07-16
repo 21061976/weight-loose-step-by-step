@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Calendar, Target, Apple, Save, Trash2 } from 'lucide-react';
+import { Plus, Calendar, Apple, Save, Trash2 } from 'lucide-react';
 
 const SimpleCalorieTracker = () => {
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
@@ -9,49 +9,27 @@ const SimpleCalorieTracker = () => {
   const [newFoodItem, setNewFoodItem] = useState('');
   const [notes, setNotes] = useState('');
 
-  // נתונים בסיסיים מדוייקים (נוסחת Katch-McArdle)
+  // נתונים בסיסיים מדוייקים
   const baseData = {
-    bmr: 1808, // BMR מדויק לפי מסה רזה
-    currentTdee: 2486, // TDEE נוכחי מדויק
-    targetTdee: 2732, // TDEE יעד עם 750 פעילות
-    currentActivity: 504, // ממוצע פעילות נוכחי
-    targetActivity: 750, // יעד פעילות
-    targetDeficit: 500, // גירעון מתוכנן
-    targetConsumption: 1986, // צריכה יומית מתוכננת
-    safeMinimum: 2170, // מינימום בטוח (120% מ-BMR)
-    bodyFatPercent: 28.4, // אחוז שומן נוכחי
-    leanMass: 66.6 // מסה רזה
+    bmr: 1808,
+    currentActivity: 504,
+    targetActivity: 750,
+    targetDeficit: 500,
+    targetConsumption: 1986,
+    safeMinimum: 2170,
+    bodyFatPercent: 28.4,
+    leanMass: 66.6
   };
 
-  // חישוב סך קלוריות אכילה
+  // חישובים
   const totalFoodCalories = foodItems.reduce((sum, item) => sum + (item.calories || 0), 0);
-  
-  // חישוב שריפה כוללת מדוייקת
   const activityCaloriesNum = parseInt(activityCalories) || 0;
   const totalBurn = baseData.bmr + baseData.currentActivity + activityCaloriesNum;
-  
-  // חישוב גירעון
   const dailyDeficit = totalBurn - totalFoodCalories;
 
-  // הוספת פריט מזון
-  const addFoodItem = () => {
-    if (newFoodItem.trim()) {
-      const estimatedCalories = estimateCalories(newFoodItem);
-      
-      setFoodItems([...foodItems, {
-        id: Date.now(),
-        name: newFoodItem,
-        calories: estimatedCalories,
-        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-      }]);
-      setNewFoodItem('');
-    }
-  };
-
-  // הערכת קלוריות בסיסית
+  // הערכת קלוריות
   const estimateCalories = (foodName) => {
     const food = foodName.toLowerCase();
-    
     const calorieDatabase = {
       'לחם': 250, 'חמאה': 150, 'ביצה': 70, 'חלב': 150, 'קפה': 5,
       'בננה': 105, 'תפוח': 95, 'יוגורט': 100, 'גבינה': 100,
@@ -65,8 +43,21 @@ const SimpleCalorieTracker = () => {
         return value;
       }
     }
-    
-    return 100; // ברירת מחדל
+    return 100;
+  };
+
+  // הוספת פריט מזון
+  const addFoodItem = () => {
+    if (newFoodItem.trim()) {
+      const estimatedCalories = estimateCalories(newFoodItem);
+      setFoodItems([...foodItems, {
+        id: Date.now(),
+        name: newFoodItem,
+        calories: estimatedCalories,
+        time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+      }]);
+      setNewFoodItem('');
+    }
   };
 
   // מחיקת פריט
@@ -74,7 +65,7 @@ const SimpleCalorieTracker = () => {
     setFoodItems(foodItems.filter(item => item.id !== id));
   };
 
-  // עדכון קלוריות פריט
+  // עדכון קלוריות
   const updateItemCalories = (id, newCalories) => {
     setFoodItems(foodItems.map(item => 
       item.id === id ? { ...item, calories: parseInt(newCalories) || 0 } : item
@@ -85,7 +76,7 @@ const SimpleCalorieTracker = () => {
   const generateDailySummary = () => {
     const summary = `יום ${new Date(currentDate).toLocaleDateString('he-IL')}:
 ${weight ? `משקל: ${weight} ק"ג` : ''}
-קלוריות פעילות נוספת: ${activityCalories || 0} (בסיס: ${baseData.currentActivity})
+פעילות נוספת: ${activityCalories || 0} (בסיס: ${baseData.currentActivity})
 שריפה כוללת: ${totalBurn.toLocaleString()} קלוריות
 גירעון: ${dailyDeficit.toLocaleString()} קלוריות (יעד: ${baseData.targetDeficit})
 מטרת צריכה: ${baseData.targetConsumption} קלוריות
@@ -110,7 +101,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
       dailyDeficit,
       notes
     };
-    
     localStorage.setItem(`day-${currentDate}`, JSON.stringify(dayData));
     alert('היום נשמר! ✅');
   };
