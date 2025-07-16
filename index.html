@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Calendar, Apple, Save, Trash2 } from 'lucide-react';
 
-const SimpleCalorieTracker = () => {
+const CalorieTracker = () => {
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
   const [weight, setWeight] = useState('');
   const [activityCalories, setActivityCalories] = useState('');
@@ -124,13 +124,11 @@ ${notes ? `הערות: ${notes}` : ''}`;
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white min-h-screen" dir="rtl">
-      {/* כותרת */}
       <div className="text-center mb-6 bg-blue-50 p-4 rounded-lg">
         <h1 className="text-2xl font-bold text-blue-800">מעקב קלוריות מיידי</h1>
         <p className="text-blue-600">🎾 אסף אוזן</p>
       </div>
 
-      {/* תאריך */}
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-2">
           <Calendar className="w-4 h-4 text-gray-600" />
@@ -144,7 +142,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         />
       </div>
 
-      {/* נתונים בסיסיים */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div>
           <label className="block text-sm font-medium mb-1">משקל (ק"ג):</label>
@@ -175,7 +172,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         </div>
       </div>
 
-      {/* מאזן קלורי מיידי */}
       <div className="mb-4 bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg">
         <div className="grid grid-cols-3 gap-2 text-center text-sm">
           <div>
@@ -204,7 +200,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         </div>
       </div>
 
-      {/* הוספת מזון */}
       <div className="mb-4">
         <div className="flex gap-2 mb-3">
           <input
@@ -224,7 +219,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         </div>
       </div>
 
-      {/* רשימת מזון */}
       <div className="mb-4">
         <h3 className="font-bold mb-2">אכלת היום:</h3>
         <div className="space-y-2 max-h-60 overflow-y-auto">
@@ -249,7 +243,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         </div>
       </div>
 
-      {/* הערות */}
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">הערות:</label>
         <textarea
@@ -260,7 +253,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         />
       </div>
 
-      {/* כפתורים */}
       <div className="space-y-2">
         <button
           onClick={generateDailySummary}
@@ -276,7 +268,6 @@ ${notes ? `הערות: ${notes}` : ''}`;
         </button>
       </div>
 
-      {/* מטרה יומית */}
       <div className="mt-4 text-center text-sm text-gray-600">
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>BMR: {baseData.bmr} (Katch-McArdle)</div>
@@ -291,4 +282,4 @@ ${notes ? `הערות: ${notes}` : ''}`;
   );
 };
 
-export default SimpleCalorieTracker;
+export default CalorieTracker;
