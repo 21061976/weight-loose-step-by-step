@@ -13,14 +13,14 @@ const SimpleCalorieTracker = () => {
   const baseData = {
     bmr: 1808, // BMR מדויק לפי מסה רזה
     currentTdee: 2486, // TDEE נוכחי מדויק
-    targetTdee: 2732,  // TDEE יעד עם 750 פעילות
+    targetTdee: 2732, // TDEE יעד עם 750 פעילות
     currentActivity: 504, // ממוצע פעילות נוכחי
-    targetActivity: 750,  // יעד פעילות
-    targetDeficit: 500,   // גירעון מתוכנן
+    targetActivity: 750, // יעד פעילות
+    targetDeficit: 500, // גירעון מתוכנן
     targetConsumption: 1986, // צריכה יומית מתוכננת
-    safeMinimum: 2170,    // מינימום בטוח (120% מ-BMR)
+    safeMinimum: 2170, // מינימום בטוח (120% מ-BMR)
     bodyFatPercent: 28.4, // אחוז שומן נוכחי
-    leanMass: 66.6        // מסה רזה
+    leanMass: 66.6 // מסה רזה
   };
 
   // חישוב סך קלוריות אכילה
@@ -36,7 +36,6 @@ const SimpleCalorieTracker = () => {
   // הוספת פריט מזון
   const addFoodItem = () => {
     if (newFoodItem.trim()) {
-      // חישוב אוטומטי של קלוריות (זה רק הערכה - המשתמש יכול לערוך)
       const estimatedCalories = estimateCalories(newFoodItem);
       
       setFoodItems([...foodItems, {
@@ -53,7 +52,6 @@ const SimpleCalorieTracker = () => {
   const estimateCalories = (foodName) => {
     const food = foodName.toLowerCase();
     
-    // מאגר קלוריות בסיסי
     const calorieDatabase = {
       'לחם': 250, 'חמאה': 150, 'ביצה': 70, 'חלב': 150, 'קפה': 5,
       'בננה': 105, 'תפוח': 95, 'יוגורט': 100, 'גבינה': 100,
@@ -172,7 +170,7 @@ ${notes ? `הערות: ${notes}` : ''}`;
         <div>
           <label className="block text-sm font-medium mb-1">
             <Apple className="w-4 h-4 inline mr-1" />
-            קלוריות פעילות נוספת:
+            פעילות נוספת:
           </label>
           <input
             type="number"
@@ -182,7 +180,7 @@ ${notes ? `הערות: ${notes}` : ''}`;
             placeholder="0"
           />
           <div className="text-xs text-gray-500 mt-1">
-            ממוצע נוכחי: {baseData.currentActivity} | יעד: {baseData.targetActivity}
+            בסיס: {baseData.currentActivity} | יעד: {baseData.targetActivity}
           </div>
         </div>
       </div>
